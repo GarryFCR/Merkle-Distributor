@@ -1,4 +1,4 @@
-# ERC20
+# Merkle Distributor
 >Implemtation of merkle proof and merkle distributor
 >Ran with the help of hardhat development environment including ethers library,waffle testing framework,chai assertion library
 
