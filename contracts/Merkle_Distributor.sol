@@ -52,7 +52,7 @@ contract Merkle_Distributor{
         return array == array & (1<<_index-1);
     }
 
-    // claim token
+    // claim token  
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
     
     	require (!isSet(_index),'Token was already taken');
