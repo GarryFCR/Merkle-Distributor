@@ -23,6 +23,7 @@ contract Merkle_Distributor{
         merkleRoot = _merkleRoot;
     }
 
+    // openzeppelin's merkle proof: checks if the given leaf node exist in the pool of accounts  
      function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
         bytes32 computedHash = leaf;
 
@@ -39,16 +40,19 @@ contract Merkle_Distributor{
         return computedHash == root;
     }
 
+    //Keeping track of accounts claiming record
     function Set(uint256 _index) private  returns(uint256){
         
         array=array|(1<< _index-1);
         
     }
     
+    // checks if the account has claimed the tokens
     function isSet(uint _index) public view  returns(bool){
         return array == array & (1<<_index-1);
     }
 
+    // claim token
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
     
     	require (!isSet(_index),'Token was already taken');
