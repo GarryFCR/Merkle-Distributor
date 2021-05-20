@@ -6,19 +6,22 @@ pragma solidity >=0.4.22 <0.9.0;
  * 
  */
  interface IERC {
- 	function transfer(address to, uint tokens) public returns (bool success);	
+    function transfer(address to, uint tokens) external  returns (bool success);    
  }
  
 contract Merkle_Distributor{
 
-	address public immutable  token;
+    address public immutable  token;
     bytes32 public immutable  merkleRoot;
-	//keep track of claimed tokens
-	//256 possible users
+    //keep track of claimed tokens
+    //256 possible users
     uint256 private array = 0;
     
 
-    constructor(address _token, bytes32 _merkleRoot) public {
+    // This event is triggered whenever a call to #claim succeeds.
+    event Claimed(uint256 index, address account, uint256 amount);
+    
+    constructor(address _token, bytes32 _merkleRoot) {
         token = _token;
         merkleRoot = _merkleRoot;
     }
@@ -43,7 +46,7 @@ contract Merkle_Distributor{
     //Keeping track of accounts claiming record
     function set(uint256 _index) private  returns(uint256){
         
-        array=array|(1<< _index-1);
+        return array=array|(1<< _index-1);
         
     }
     
@@ -55,19 +58,19 @@ contract Merkle_Distributor{
     // claim token  
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
     
-    	require (!isSet(_index),'Token was already taken');
+        require (!isSet(_index),'Token was already taken');
 
-    	bytes32 node = keccak256(abi.encodePacked(_index, account, amount));
+        bytes32 node = keccak256(abi.encodePacked(_index, account, amount));
         require(verify(merkleProof, merkleRoot, node), 'MerkleDistributor: Invalid proof.');
 
         // Mark it claimed and send the token.
         set(_index);
-        require(IERC20(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
+        require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
 
         emit Claimed(_index, account, amount);
 
 
-    		
+            
     }
     
 
