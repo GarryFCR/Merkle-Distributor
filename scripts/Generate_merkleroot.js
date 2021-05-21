@@ -5,9 +5,8 @@ const fs = require("fs");
 const leaves=[];
 
 for(var i=0;i<data.amount.length-1;i++){
-	leaves.push(ethers.utils.keccak256(ethers.utils.hexlify(data.address[i]),ethers.utils.hexlify(data.amount[i])))
+	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(100,4)).slice(2)));
 }
-
 
 
 const generate_root= (input)=>{
@@ -24,7 +23,7 @@ const generate_root= (input)=>{
 	
 	
 	for(var i=0;i<n;i=i+2){
-		output.push(ethers.utils.keccak256(input[i],input[i+1]));
+		output.push(ethers.utils.keccak256(input[i]+input[i+1].slice(2)));
 	}
 
 	if(input.length%2!=0){
@@ -45,5 +44,5 @@ root_obj.Merkle_root.push(root);
 
 fs.writeFile("./root.json", JSON.stringify(root_obj), (err) => {
     if (err) {  console.error(err);  return; };
-    console.log("File has been created");
+    
 });
