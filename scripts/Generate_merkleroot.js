@@ -1,6 +1,6 @@
 const data = require('./list.json');
 const { ethers } = require("ethers");
-
+const fs = require("fs");
 
 const leaves=[];
 
@@ -37,4 +37,13 @@ const generate_root= (input)=>{
 }
 
 const root=generate_root(leaves);
-console.log(root);
+
+var root_obj = {
+	Merkle_root:[]
+};
+root_obj.Merkle_root.push(root);
+
+fs.writeFile("./root.json", JSON.stringify(root_obj), (err) => {
+    if (err) {  console.error(err);  return; };
+    console.log("File has been created");
+});
