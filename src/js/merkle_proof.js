@@ -22,15 +22,10 @@ const getproof=(index,input,proof) =>{
 
     const output=[];
 
-    input.reduce((accumulator, currentValue) => {
-      if (accumulator) {
-        output.push(ethers.utils.keccak256(accumulator + currentValue.slice(2)));
-        return null;
-      } else {
-        return currentValue;
-      }
-    });
-    console.log(Math.floor(index / 2));
+    for(var i=0;i<input.length;i=i+2){
+		output.push(ethers.utils.keccak256(input[i]+input[i+1].slice(2)));
+	}
+    console.log(output);
 
     return getproof(Math.floor(index / 2),output, proof);
 
