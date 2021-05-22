@@ -20,6 +20,17 @@ const getproof=(index,input,proof) =>{
       proof += '' + input[index + 1].slice(2);
     }
 
+    const output=[];
 
+    input.reduce((accumulator, currentValue) => {
+      if (accumulator) {
+        output.push(ethers.utils.keccak256(accumulator + currentValue.slice(2)));
+        return null;
+      } else {
+        return currentValue;
+      }
+    });
+
+    return getproof(output, Math.floor(index / 2), proof);
 
 }
