@@ -4,7 +4,7 @@ const { ethers } = require("ethers");
 
 const leaves=[];
 
-for(var i=0;i<data.amount.length-1;i++){
+for(var i=0;i<data.amount.length;i++){
 	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(100,4)).slice(2)));
 }
 
@@ -25,7 +25,7 @@ const getproof=(index,input,proof) =>{
     for(var i=0;i<input.length;i=i+2){
 		output.push(ethers.utils.keccak256(input[i]+input[i+1].slice(2)));
 	}
-    console.log(output);
+    
 
     return getproof(Math.floor(index / 2),output, proof);
 
