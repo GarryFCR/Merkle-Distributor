@@ -6,11 +6,12 @@ root=data1.Merkle_root;
 
 const leaves=[];
 
+//hashing each address with the amount they are bound to recieve
 for(var i=0;i<data.amount.length;i++){
 	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(data.amount[i],4)).slice(2)));
 }
 
-
+//function to generate the merkle proof of a given address
 const getproof=(index,input,proof) =>{
 
 	if (input.length === 1) 
@@ -33,11 +34,13 @@ const getproof=(index,input,proof) =>{
 
 }
 
+//trying to generate the proof of address at index 2
 var proof=[];
 proof=getproof(2,leaves,proof)
 //console.log(proof);
 
 
+//function to verify  the merkle proof
 const verify=(root,proof,index)=>{
 	node=leaves[index];
 	for(var i=0;i<proof.length;i++){
@@ -55,5 +58,5 @@ const verify=(root,proof,index)=>{
 		
 
 }
-
+//trying to verify if the proof of address at index 2 is valid
 verify(root,proof,2);
