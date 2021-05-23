@@ -4,10 +4,9 @@ const fs = require("fs");
 
 const leaves=[];
 
-for(var i=0;i<data.amount.length-1;i++){
-	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(100,4)).slice(2)));
+for(var i=0;i<data.amount.length;i++){
+	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(data.amount[i],4)).slice(2)));
 }
-
 
 const generate_root= (input)=>{
 
@@ -36,6 +35,7 @@ const generate_root= (input)=>{
 }
 
 const root=generate_root(leaves);
+
 
 var root_obj = {
 	Merkle_root:[]
