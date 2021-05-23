@@ -10,7 +10,7 @@ for(var i=0;i<data.amount.length;i++){
 	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(data.amount[i],4)).slice(2)));
 }
 
-
+//console.log(leaves);
 //function to generate the merkle root 
 const generate_root= (input)=>{
 
@@ -29,6 +29,7 @@ const generate_root= (input)=>{
 		output.push(ethers.utils.keccak256(input[i]+input[i+1].slice(2)));
 	}
 
+	console.log(output);
 	if(input.length%2!=0){
 		output.push(input[n/2])
 	}
