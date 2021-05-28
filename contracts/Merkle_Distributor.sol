@@ -32,9 +32,9 @@ contract Merkle_Distributor{
 
         for (uint256 i = 0; i < proof.length; i++) {
             if (_index%2==1) {
-                computedHash = keccak256(abi.encodePacked(computedHash, proof[i]));
+                computedHash = keccak256(abi.encodePacked(proof[i],computedHash,));
             } else {
-                computedHash = keccak256(abi.encodePacked(proof[i], computedHash));
+                computedHash = keccak256(abi.encodePacked(computedHash,proof[i]));
             }
             _index=_index/2;
         }

@@ -38,7 +38,7 @@ const getproof=(index,input,proof) =>{
 var proof=[];
 proof=getproof(2,leaves,proof)
 console.log(proof);
-
+console.log(leaves)
 
 var node;
 //function to verify  the merkle proof
