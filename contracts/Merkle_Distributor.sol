@@ -27,24 +27,23 @@ contract Merkle_Distributor{
     }
 
     // openzeppelin's merkle proof: checks if the given leaf node exist in the pool of accounts  
-     function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
+     function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf,uint256 _index) internal pure returns (bool) {
         bytes32 computedHash = leaf;
 
         for (uint256 i = 0; i < proof.length; i++) {
-            bytes32 proofElement = proof[i];
-
-            if (computedHash <= proofElement) {
-                computedHash = keccak256(abi.encodePacked(computedHash, proofElement));
+            if (_index%2==1) {
+                computedHash = keccak256(abi.encodePacked(computedHash, proof[i]));
             } else {
-                computedHash = keccak256(abi.encodePacked(proofElement, computedHash));
+                computedHash = keccak256(abi.encodePacked(proof[i], computedHash));
             }
+            _index=_index/2;
         }
 
         return computedHash == root;
     }
 
     //Keeping track of accounts claiming record
-    function set(uint256 _index) private  returns(uint256){
+    function Set(uint256 _index) private  returns(uint256){
         
         return array=array|(1<< _index-1);
         
@@ -60,11 +59,11 @@ contract Merkle_Distributor{
     
         require (!isSet(_index),'Token was already taken');
 
-        bytes32 node = keccak256(abi.encodePacked(_index, account, amount));
-        require(verify(merkleProof, merkleRoot, node), 'MerkleDistributor: Invalid proof.');
+        bytes32 node = keccak256(abi.encodePacked(account, amount));
+        require(verify(merkleProof, merkleRoot, node,_index), 'MerkleDistributor: Invalid proof.');
 
         // Mark it claimed and send the token.
-        set(_index);
+        Set(_index);
         require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
 
         emit Claimed(_index, account, amount);

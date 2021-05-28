@@ -3,7 +3,7 @@ const data = require('./list.json');
 
 async function main(){
 
-fs.writeFileSync('../src/js/app.js', JSON.stringify(data));
+fs.writeFileSync('src/js/app.js', JSON.stringify(data));
 }
 
 main().then(()=> process.exit(0))
