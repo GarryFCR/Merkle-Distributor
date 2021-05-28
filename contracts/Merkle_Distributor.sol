@@ -45,13 +45,13 @@ contract Merkle_Distributor{
     //Keeping track of accounts claiming record
     function Set(uint256 _index) private  returns(uint256){
         
-        return array=array|(1<< _index-1);
+        return array=array|(1<< (_index-1));
         
     }
     
     // checks if the account has claimed the tokens
     function isSet(uint _index) public view  returns(bool){
-        return array == array & (1<<_index-1);
+        return  (1<< (_index-1)) == array & (1<< (_index-1));
     }
 
     // claim token  

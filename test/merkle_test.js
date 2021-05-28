@@ -20,11 +20,16 @@ describe('Testing the Merkle_Distributor',()=>{
 
 
 	describe('Initialize',()=>{
-	it('Checking the initial values of state variables',async ()=>{
+	it(' is Checking the initial values of state variables',async ()=>{
 			expect(await merk.token()).to.equal(alpha.address);
 			expect(await merk.merkleRoot()).to.equal(root);
 		});
 	});
 
-	
+	describe('Claim failure', () => {
+    it('confirms that no address has claimed', async () => {
+      expect(await merk.isSet(1)).to.equal(false);
+      });
+	});
+
 });
