@@ -26,7 +26,7 @@ const getproof=(index,input,proof) =>{
     const output=[];
 
     for(var i=0;i<input.length;i=i+2){
-		output.push(ethers.utils.solidityKeccak256(["address","address"],[input[i],input[i+1]]));
+		output.push(ethers.utils.solidityKeccak256(["bytes32","bytes32"],[input[i],input[i+1]]));
 	}
     
 
