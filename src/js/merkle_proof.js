@@ -8,7 +8,7 @@ const leaves=[];
 
 //hashing each address with the amount they are bound to recieve
 for(var i=0;i<data.amount.length;i++){
-	leaves.push(ethers.utils.keccak256(data.address[i]+(ethers.utils.hexZeroPad(data.amount[i],4)).slice(2)));
+	leaves.push(ethers.utils.solidityKeccak256([ "address", "uint256" ],[data.address[i],data.amount[i]]));
 }
 
 //function to generate the merkle proof of a given address
@@ -26,7 +26,7 @@ const getproof=(index,input,proof) =>{
     const output=[];
 
     for(var i=0;i<input.length;i=i+2){
-		output.push(ethers.utils.keccak256(input[i]+input[i+1].slice(2)));
+		output.push(ethers.utils.solidityKeccak256(["address","address"],[input[i],input[i+1]]));
 	}
     
 
@@ -37,18 +37,20 @@ const getproof=(index,input,proof) =>{
 //trying to generate the proof of address at index 2
 var proof=[];
 proof=getproof(2,leaves,proof)
-//console.log(proof);
+console.log(proof);
 
 
+var node;
 //function to verify  the merkle proof
 const verify=(root,proof,index)=>{
+
 	node=leaves[index];
 	for(var i=0;i<proof.length;i++){
 			
 			if (index%2) {
-		      node=ethers.utils.keccak256(proof[i]+node.slice(2));
+		      node=ethers.utils.solidityKeccak256(["bytes32","bytes32"],[proof[i],node]);
 		    } else {
-		      node=ethers.utils.keccak256(node+proof[i].slice(2));
+		      node=ethers.utils.solidityKeccak256(["bytes32","bytes32"],[node,proof[i]]);
 		    }
 		    index=Math.floor(index / 2);
 		    
@@ -60,3 +62,4 @@ const verify=(root,proof,index)=>{
 }
 //trying to verify if the proof of address at index 2 is valid
 verify(root,proof,2);
+

@@ -31,5 +31,6 @@ describe('Testing the Merkle_Distributor',()=>{
       expect(await merk.isSet(1)).to.equal(false);
       });
 	});
-
+ 	
+ 	//describe('Verifying merkle proofs',)
 });
