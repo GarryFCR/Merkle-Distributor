@@ -35,7 +35,10 @@ describe('Testing the Merkle_Distributor',()=>{
     	await expect(merk.claim(17,addr1.address,100,[])).to.be.revertedWith('Invalid index value');
     })
 
-    
+    it('transfers the token',async ()=>{
+    	await expect(alpha.balanceOf(addr1.address)).to.equal(BigNumber.from(0));
+    })
+
 	});
  	
 	//it fails for empty proof
