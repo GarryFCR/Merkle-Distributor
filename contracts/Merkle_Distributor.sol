@@ -32,7 +32,7 @@ contract Merkle_Distributor{
 
         for (uint256 i = 0; i < proof.length; i++) {
             if (_index%2==1) {
-                computedHash = keccak256(abi.encodePacked(proof[i],computedHash,));
+                computedHash = keccak256(abi.encodePacked(proof[i],computedHash));
             } else {
                 computedHash = keccak256(abi.encodePacked(computedHash,proof[i]));
             }
@@ -51,6 +51,7 @@ contract Merkle_Distributor{
     
     // checks if the account has claimed the tokens
     function isSet(uint _index) public view  returns(bool){
+        require (_index >= 0 && _index<=16,'Invalid index value');
         return  (1<< (_index-1)) == array & (1<< (_index-1));
     }
 

@@ -30,7 +30,26 @@ describe('Testing the Merkle_Distributor',()=>{
     it('confirms that no address has claimed', async () => {
       expect(await merk.isSet(1)).to.equal(false);
       });
+
+    it('fails with invalid index value',async ()=>{
+    	await expect(merk.claim(17,addr1.address,100,[])).to.be.revertedWith('Invalid index value');
+    })
+
+    
 	});
  	
- 	//describe('Verifying merkle proofs',)
+	//it fails for empty proof
+
+	//successful claim
+	//transfers the tokens
+	//must have enough to transfer
+	//sets is claim
+	//cannot allow two claims
+	//cannot claim for address with others proof
+	//cannot claim more than proof
+	//
+
+
+
+
 });
