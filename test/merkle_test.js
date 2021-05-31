@@ -1,46 +1,57 @@
 const { expect } = require('chai');
+const { BigNumber } = require('ethers')
+const { deployContract } = require('ethereum-waffle');
+
+
+
+const Dist = require("../artifacts/contracts/Merkle_Distributor.sol/Merkle_Distributor.json");
+const Token = require("../artifacts/contracts/Alphacointract.sol/Alphacointract.json");
+
 const data1 = require('../scripts/list.json');
 const data = require('../scripts/root.json');
 
 root=data.Merkle_root[0];
 
-describe('Testing the Merkle_Distributor',()=>{
-   let Alpha,Merk,alpha,merk;
 
-   
-	beforeEach(async () => {
+describe('Test the  Merkle_Distributor',()=>{
+	
 
-	Alpha= await ethers.getContractFactory('Alphacointract');
-	alpha= await Alpha.deploy();
-    Merk=  await ethers.getContractFactory('Merkle_Distributor');
-    merk= await Merk.deploy(alpha.address,root);
-    [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
-	});
-
+	beforeEach('deploy token', async () => {
+		 	[owner, addr1, addr2, ...addrs] =  await ethers.getSigners();
+		    token = await deployContract(owner, Token,[]);
+	    });
 
 
 	describe('Initialize',()=>{
-	it(' is Checking the initial values of state variables',async ()=>{
-			expect(await merk.token()).to.equal(alpha.address);
-			expect(await merk.merkleRoot()).to.equal(root);
-		});
+		it(' is Checking the initial values of state variables',async ()=>{
+				dist = await deployContract(owner,Dist,[token.address,root]);
+				expect(await dist.token()).to.equal(token.address);
+				expect(await dist.merkleRoot()).to.equal(root);
+			});
 	});
+
 
 	describe('Claim failure', () => {
-    it('confirms that no address has claimed', async () => {
-      expect(await merk.isSet(1)).to.equal(false);
-      });
+	    it('confirms that no address has claimed', async () => {
+				dist = await deployContract(owner,Dist,[token.address,root]);
+		        expect(await dist.isSet(1)).to.equal(false);
+		    });
 
-    it('fails with invalid index value',async ()=>{
-    	await expect(merk.claim(17,addr1.address,100,[])).to.be.revertedWith('Invalid index value');
-    })
+	    it('fails with invalid index value',async ()=>{
+				dist = await deployContract(owner,Dist,[token.address,root]);
+	    		await expect(dist.claim(17,addr1.address,100,[])).to.be.revertedWith('Invalid index value');
+	    	});
 
-    it('transfers the token',async ()=>{
-    	await expect(alpha.balanceOf(addr1.address)).to.equal(BigNumber.from(0));
-    })
 
-	});
- 	
+		it('Fails on empty proof',async ()=>{
+			 	dist = await deployContract(owner,Dist,[token.address,root]);
+			 	await expect(dist.claim(0,addr1.address,100,[])).to.be.revertedWith('MerkleDistributor: Invalid proof.');
+		    });
+		
+		});
+
+});
+
 	//it fails for empty proof
 
 	//successful claim
@@ -55,4 +66,3 @@ describe('Testing the Merkle_Distributor',()=>{
 
 
 
-});
