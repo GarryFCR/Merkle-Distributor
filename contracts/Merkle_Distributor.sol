@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.4.22 <0.9.0;
+import 'hardhat/console.sol';
 
 /**
  * 
@@ -38,7 +39,6 @@ contract Merkle_Distributor{
             }
             _index=_index/2;
         }
-
         return computedHash == root;
     }
 
@@ -50,19 +50,18 @@ contract Merkle_Distributor{
     }
     
     // checks if the account has claimed the tokens
-    function isSet(uint _index) public view  returns(bool){
-        require (_index >= 0 && _index<=16,'Invalid index value');
+    function isSet(uint256 _index) public view  returns(bool){
+
+        require (_index > 0 && _index<=16,'Invalid index value');
         return  (1<< (_index-1)) == array & (1<< (_index-1));
     }
 
     // claim token  
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
-    
-        require (!isSet(_index),'Token was already taken');
 
+        require (isSet(_index)!=true,'Token was already taken');
         bytes32 node = keccak256(abi.encodePacked(account, amount));
         require(verify(merkleProof, merkleRoot, node,_index), 'MerkleDistributor: Invalid proof.');
-
         // Mark it claimed and send the token.
         Set(_index);
         require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');

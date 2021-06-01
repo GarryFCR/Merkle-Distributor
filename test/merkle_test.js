@@ -32,12 +32,12 @@ describe('Test the  Merkle_Distributor',()=>{
 
 
 	describe('Claim failure', () => {
-	    it('confirms that no address has claimed', async () => {
+	    it('confirms that an address has not claimed', async () => {
 				dist = await deployContract(owner,Dist,[token.address,root]);
 		        expect(await dist.isSet(1)).to.equal(false);
 		    });
 
-	    it('fails with invalid index value',async ()=>{
+	    it('Fails with invalid index value',async ()=>{
 				dist = await deployContract(owner,Dist,[token.address,root]);
 	    		await expect(dist.claim(17,addr1.address,100,[])).to.be.revertedWith('Invalid index value');
 	    	});
@@ -45,7 +45,7 @@ describe('Test the  Merkle_Distributor',()=>{
 
 		it('Fails on empty proof',async ()=>{
 			 	dist = await deployContract(owner,Dist,[token.address,root]);
-			 	await expect(dist.claim(0,addr1.address,100,[])).to.be.revertedWith('MerkleDistributor: Invalid proof.');
+			 	await expect(dist.claim(1,data1.address[0],100,[])).to.be.revertedWith('MerkleDistributor: Invalid proof.');
 		    });
 		
 		});
