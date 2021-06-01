@@ -45,23 +45,27 @@ contract Merkle_Distributor{
     //Keeping track of accounts claiming record
     function Set(uint256 _index) private  returns(uint256){
         
-        return array=array|(1<< (_index-1));
+        return array = array|(1<< _index);
         
     }
     
     // checks if the account has claimed the tokens
     function isSet(uint256 _index) public view  returns(bool){
 
-        require (_index > 0 && _index<=16,'Invalid index value');
-        return  (1<< (_index-1)) == array & (1<< (_index-1));
+       
+        return  (1<< _index) == array & (1<< _index);
     }
 
     // claim token  
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
 
+        require (_index > 0 && _index<=16,'Invalid index value');
+        _index = _index-1;
+
         require (isSet(_index)!=true,'Token was already taken');
         bytes32 node = keccak256(abi.encodePacked(account, amount));
         require(verify(merkleProof, merkleRoot, node,_index), 'MerkleDistributor: Invalid proof.');
+        
         // Mark it claimed and send the token.
         Set(_index);
         require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
