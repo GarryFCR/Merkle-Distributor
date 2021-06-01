@@ -64,7 +64,7 @@ describe('Test the  Merkle_Distributor',()=>{
 		it('Claims correctly',async ()=>{
 				dist = await deployContract(owner,Dist,[token.address,root]);
 				let proof = wrap_get(2);
-				
+
 				await token.transfer(dist.address,100000);
 				await token.balanceOf(dist.address);
 	
@@ -78,8 +78,8 @@ describe('Test the  Merkle_Distributor',()=>{
 
 	
 
-	//successful claim
-	//transfers the tokens
+	
+	
 	//must have enough to transfer
 	//sets is claim
 	//cannot allow two claims
