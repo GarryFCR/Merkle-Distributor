@@ -34,16 +34,21 @@ const getproof=(index,input,proof) =>{
 
 }
 
-//trying to generate the proof of address at index 0
-var proof=[];
-proof=getproof(0,leaves,proof)
-console.log(proof);
-console.log(leaves)
+const wrap_get=(_index)=>{
+	_index=_index-1;
+	var proof=getproof(_index,leaves,[]);
+	//console.log(proof);
+	return proof;
+}
+
+
+
 
 var node;
 //function to verify  the merkle proof
 const verify=(root,proof,index)=>{
 
+	index=index-1;
 	node=leaves[index];
 	for(var i=0;i<proof.length;i++){
 			
@@ -60,6 +65,5 @@ const verify=(root,proof,index)=>{
 		
 
 }
-//trying to verify if the proof of address at index 0 is valid
-verify(root,proof,0);
 
+//verify(root,wrap_get(1),1);

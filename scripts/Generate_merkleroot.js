@@ -66,7 +66,7 @@ const generate_root= (input)=>{
 		output.push(ethers.utils.solidityKeccak256(["bytes32","bytes32"],[input[i],input[i+1]]));
 	}
 
-	console.log(output);
+	
 
 	return generate_root(output);
 
