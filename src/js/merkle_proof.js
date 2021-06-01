@@ -67,3 +67,7 @@ const verify=(root,proof,index)=>{
 }
 
 //verify(root,wrap_get(1),1);
+
+module.exports={
+	wrap_get
+};
