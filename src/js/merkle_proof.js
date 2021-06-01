@@ -34,7 +34,7 @@ const getproof=(index,input,proof) =>{
 
 }
 
-//trying to generate the proof of address at index 2
+//trying to generate the proof of address at index 0
 var proof=[];
 proof=getproof(0,leaves,proof)
 console.log(proof);
@@ -60,6 +60,6 @@ const verify=(root,proof,index)=>{
 		
 
 }
-//trying to verify if the proof of address at index 2 is valid
+//trying to verify if the proof of address at index 0 is valid
 verify(root,proof,0);
 

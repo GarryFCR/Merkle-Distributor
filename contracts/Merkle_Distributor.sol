@@ -68,8 +68,9 @@ contract Merkle_Distributor{
         
         // Mark it claimed and send the token.
         Set(_index);
-        require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
+        console.log("Here",account);
 
+        require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
         emit Claimed(_index, account, amount);
 
 
