@@ -1,6 +1,8 @@
 # Merkle Distributor
->Implemtation of merkle proof and merkle distributor
->Ran with the help of hardhat development environment including ethers library,waffle testing framework,chai assertion library
+>Simple implemtation of a Merkle tree inspired by  Uniswap's merkle distributor.
+
+* 
+* Ran with the help of hardhat development environment including ethers library,waffle testing framework,chai assertion library,etc.
 
 ## Note:
 * 

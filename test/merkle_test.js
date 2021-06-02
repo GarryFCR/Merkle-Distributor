@@ -110,7 +110,6 @@ describe('Test the  Merkle_Distributor',()=>{
 
 	
 	
-	//check events
 	
 	
 
