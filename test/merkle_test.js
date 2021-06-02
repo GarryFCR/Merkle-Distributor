@@ -69,7 +69,8 @@ describe('Test the  Merkle_Distributor',()=>{
 				await token.balanceOf(dist.address);
 	
 			 	await expect(dist.claim(2,data.address[1],data.amount[1],proof)).to.emit(dist, 'Claimed');
-
+			 	//Checking if its claimed has been recorded
+			 	expect(await dist.isSet(2)).to.equal(true);
 
 		})
 	})
@@ -81,7 +82,6 @@ describe('Test the  Merkle_Distributor',()=>{
 	
 	
 	//must have enough to transfer
-	//sets is claim
 	//cannot allow two claims
 	//cannot claim for address with others proof
 	//cannot claim more than proof

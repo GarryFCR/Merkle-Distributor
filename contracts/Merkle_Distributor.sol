@@ -52,7 +52,8 @@ contract Merkle_Distributor{
     // checks if the account has claimed the tokens
     function isSet(uint256 _index) public view  returns(bool){
 
-       
+        _index = _index-1;
+        //console.log(array);
         return  (1<< _index) == array & (1<< _index);
     }
 
@@ -60,9 +61,9 @@ contract Merkle_Distributor{
     function claim (uint256 _index,address account,uint256 amount,bytes32[] calldata merkleProof) external {
 
         require (_index > 0 && _index<=16,'Invalid index value');
-        _index = _index-1;
-
         require (isSet(_index)!=true,'Token was already taken');
+
+         _index = _index-1;
         bytes32 node = keccak256(abi.encodePacked(account, amount));
         require(verify(merkleProof, merkleRoot, node,_index), 'MerkleDistributor: Invalid proof.');
         
