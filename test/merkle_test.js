@@ -47,6 +47,32 @@ describe('Test the  Merkle_Distributor',()=>{
 			 	dist = await deployContract(owner,Dist,[token.address,root]);
 			 	await expect(dist.claim(2,data.address[1],data.amount[1],[])).to.be.revertedWith('MerkleDistributor: Invalid proof.');
 		    });
+
+		it('Claims with another accounts proof and/or claiming more tokens than assigned is not possible',async ()=>{
+			 	dist = await deployContract(owner,Dist,[token.address,root]);
+			 	await expect(dist.claim(7,data.address[6],data.amount[6],wrap_get(8))).to.be.revertedWith('MerkleDistributor: Invalid proof.');
+			 	await expect(dist.claim(7,data.address[6],1000,wrap_get(7))).to.be.revertedWith('MerkleDistributor: Invalid proof.');
+		    
+		    });
+
+		it('Cannot claim twice',async ()=>{
+			 	dist = await deployContract(owner,Dist,[token.address,root]);
+
+			 	//Depositing some tokens in the contract
+				await token.transfer(dist.address,100000);
+	
+			 	await dist.claim(7,data.address[6],data.amount[6],wrap_get(7))
+			 	await expect(dist.claim(7,data.address[6],data.amount[6],wrap_get(7))).to.be.revertedWith('Token was already taken');
+		    });
+
+		it('Cannot transfer with insufficient balance',async ()=>{
+			 	dist = await deployContract(owner,Dist,[token.address,root]);
+
+			 	//Depositing some tokens in the contract
+				await token.transfer(dist.address,100);
+	
+			 	await expect(dist.claim(7,data.address[6],data.amount[6],wrap_get(7))).to.be.revertedWith('Insufficient balance');
+		    });
 		
 		});
 
@@ -63,11 +89,11 @@ describe('Test the  Merkle_Distributor',()=>{
 
 		it('Claims correctly',async ()=>{
 				dist = await deployContract(owner,Dist,[token.address,root]);
+				//Getting the proof for second account
 				let proof = wrap_get(2);
-
+				//Depositing some tokens in the contract
 				await token.transfer(dist.address,100000);
-				await token.balanceOf(dist.address);
-	
+				
 			 	await expect(dist.claim(2,data.address[1],data.amount[1],proof)).to.emit(dist, 'Claimed');
 			 	//Checking if its claimed has been recorded
 			 	expect(await dist.isSet(2)).to.equal(true);
@@ -81,11 +107,9 @@ describe('Test the  Merkle_Distributor',()=>{
 
 	
 	
-	//must have enough to transfer
-	//cannot allow two claims
-	//cannot claim for address with others proof
-	//cannot claim more than proof
-	//
+	//check events
+	
+	
 
 
 
