@@ -94,7 +94,10 @@ describe('Test the  Merkle_Distributor',()=>{
 				//Depositing some tokens in the contract
 				await token.transfer(dist.address,100000);
 				
-			 	await expect(dist.claim(2,data.address[1],data.amount[1],proof)).to.emit(dist, 'Claimed');
+			 	await expect(dist.claim(2,data.address[1],data.amount[1],proof))
+			 	.to.emit(dist, 'Claimed')
+			 	.withArgs(2, data.address[1],data.amount[1]);
+
 			 	//Checking if its claimed has been recorded
 			 	expect(await dist.isSet(2)).to.equal(true);
 

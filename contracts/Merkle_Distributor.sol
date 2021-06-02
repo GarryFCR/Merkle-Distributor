@@ -71,7 +71,7 @@ contract Merkle_Distributor{
         Set(_index);
 
         require(IERC(token).transfer(account, amount), 'MerkleDistributor: Transfer failed.');
-        emit Claimed(_index, account, amount);
+        emit Claimed(_index+1, account, amount);
 
 
             
