@@ -17,6 +17,14 @@ async function main(){
   	console.log("Merkle Distributor contract :",dist.address);
 
 
+  	const contract ={
+  		address: dist.address,
+  		abi: JSON.parse(dist.interface.format('json'))
+  	};
+
+  	fs.writeFileSync('src/js/Merkle_Dist.json',JSON.stringify(contract));
+
+
 }
 
 main().then(()=> process.exit(0))
