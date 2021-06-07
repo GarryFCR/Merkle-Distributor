@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { BigNumber } = require('ethers')
 const { deployContract } = require('ethereum-waffle');
-const { wrap_get } = require('../src/js/merkle_proof.js')
+const { wrap_get } = require('../scripts/merkle_proof.js')
 
 
 const Dist = require("../artifacts/contracts/Merkle_Distributor.sol/Merkle_Distributor.json");

@@ -1,5 +1,5 @@
-const data = require('../../scripts/list.json');
-const data1 = require('../../scripts/root.json');
+const data = require('./list.json');
+const data1 = require('./root.json');
 const { ethers } = require("ethers");
 
 root=data1.Merkle_root;
