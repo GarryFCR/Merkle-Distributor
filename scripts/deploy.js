@@ -22,7 +22,7 @@ async function main(){
   		abi: JSON.parse(dist.interface.format('json'))
   	};
 
-  	fs.writeFileSync('src/js/Merkle_Dist.json',JSON.stringify(contract));
+  	fs.writeFileSync('frontend/src/Merkle_Dist.json',JSON.stringify(contract));
 
 
 }
