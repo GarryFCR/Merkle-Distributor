@@ -14,12 +14,13 @@ const load_blockchain = ()=>
 			const signer_address = signer.getAddress();
 			const merkle = new Contract( Merkle.address, Merkle.abi, signer);
 
-			resolve({signerAddress, merkle});
+			resolve({signer_address, merkle});
 		}
 		resolve({signerAddress: undefined, merkle: undefined});	
 	});
 })
 
+//console.log(load_blockchain());
 module.exports={
 	load_blockchain
 };

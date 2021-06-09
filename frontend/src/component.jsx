@@ -1,18 +1,19 @@
 import React, {Component} from "react";
+import {local_blockchain} from "./local_blockchain.js"
 
-
-class chain extends Component {
+class Chain extends Component {
 
     state ={
-        owner : "",
+        owner : "Hi",
         distributor:""
     };
 
-    connect = () => {
+    connect(){
         const init = async () => {
-
-          const { dist } = await getBlockchain();
-          this.setState({owner: dist.signerAddress, distributor: dist.merkle});
+          
+          const { dist } = await local_blockchain();
+         
+          this.setState({owner: dist.signer_address, distributor: dist.merkle});
         
         };
         init();
@@ -20,10 +21,9 @@ class chain extends Component {
 
 
 	render() {
-        
+      //this.connect();  
 		return (
-			<div>
-               {this.connect()}
+			<div>    
                {this.state.owner}
 			</div>
 		);
@@ -32,4 +32,4 @@ class chain extends Component {
 
 
 
-export default chain;
+export default Chain;
