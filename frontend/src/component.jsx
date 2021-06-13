@@ -6,7 +6,9 @@ import  Merkle from './Merkle_Dist.json';
 
 class App extends Component {
   state ={
-    address:""
+    address:"",
+    isProof : false,
+    proof:[]
   };
   //get account connected via metamask
   requestAccount() {
@@ -41,13 +43,14 @@ class App extends Component {
 
         if(list.address[i] === this.state.address){
         
-          console.log(val.target.value)
+          //console.log(val.target.value)
           index=i+1;
           break;
         }
       }
-      const proof=wrap_get(index);
-      console.log(proof);
+      const merkle_proof=wrap_get(index);
+      this.setState({proof: merkle_proof  });
+      //console.log(this.state.proof);
     }
 
     else{
@@ -55,12 +58,17 @@ class App extends Component {
     }
   }
 
+
+
  
   render() { 
     return ( <div >   {this.connect()} 
       <h1>MERKLE DISTRIBUTOR</h1><br/>
       <input type="text" onChange={this.getProof} placeholder="Enter Address to generate Merkle proof"></input>
-      <button className="btn btn-secondary btn-sm">Generate</button><br/>
+      <button className="btn btn-secondary btn-sm" onClick={()=>{this.setState({isProof: true})}}>Generate</button><br/>
+      { 
+        this.state.isProof?<span>{this.state.proof.map(index=>{return (<div>{index}</div>)})}</span>:null
+      }
     </div> );
   }
 }
