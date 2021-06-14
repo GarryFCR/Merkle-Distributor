@@ -37,20 +37,21 @@ class App extends Component {
     const pattern="0[Xx][A-Za-z0-9]{40}";
     var index=0;
     if(val.target.value.match(pattern)){
+      
       this.setState({address: val.target.value });
       
       for(var i=0;i<list.address.length;i++){ 
-
-        if(list.address[i] === this.state.address){
+       
+        if(list.address[i] === val.target.value){
         
-          //console.log(val.target.value)
+          console.log(true);
           index=i+1;
           break;
         }
       }
       const merkle_proof=wrap_get(index);
       this.setState({proof: merkle_proof  });
-      //console.log(this.state.proof);
+      //console.log(index);
     }
 
     else{
@@ -67,7 +68,7 @@ class App extends Component {
       <input type="text" onChange={this.getProof} placeholder="Enter Address to generate Merkle proof"></input>
       <button className="btn btn-secondary btn-sm" onClick={()=>{this.setState({isProof: true})}}>Generate</button><br/>
       { 
-        this.state.isProof?<span>{this.state.proof.map(index=>{return (<div>{index}</div>)})}</span>:null
+        this.state.isProof?<span>{this.state.proof.map((index,i)=>{return (<div key={i}>{index}</div>)})}</span>:null
       }
     </div> );
   }
