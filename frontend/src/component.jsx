@@ -82,7 +82,7 @@ class App extends Component {
 				<br />
 
 				<div> 
-					<span>Check if your address is valid for claiming tokens :</span>
+					<h5>Check if your address is valid for claiming tokens :</h5>
 					<br/><br/>
 					<input
 						type="text"
@@ -111,7 +111,7 @@ class App extends Component {
 				</div>
 				<br/><br/>
 				<div>
-				<span>Check if you have Claimed your token :</span>
+				<h5>Check if you have Claimed your tokens :</h5>
 				<br/><br/>
 				<input
 						type="text"
@@ -133,6 +133,24 @@ class App extends Component {
 						this.state.isClaim===2?<span>You haven't Claimed</span>:null
 					}
 					
+				</div>
+				<br/><br/>
+				<div>
+					<h5>CLAIM:</h5>
+					<input
+						type="text"
+						onChange={this.getProof}
+						placeholder="Enter Address"
+					></input>
+					<button
+						className="btn btn-secondary btn-sm"
+						onClick={() => {
+							
+						}}
+					>
+						Claim
+					</button>
+					<br /><br />
 				</div>
 
 
