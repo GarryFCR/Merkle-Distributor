@@ -48,6 +48,7 @@ class App extends Component {
 			//console.log(index);
 		} else {
 			this.setState({address: ""});
+			this.setState({proof: []});
 			console.log(false);
 		}
 	};
@@ -89,7 +90,7 @@ class App extends Component {
 							return <div key={i}>{index}</div>;
 						})}
 					</span>
-				) :<span>INVALID ADDRESS</span> }
+				) :  <span>Waiting for a valid address...</span> }
 			</div>
 		);
 	}
