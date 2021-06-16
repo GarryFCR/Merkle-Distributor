@@ -71,16 +71,24 @@ class App extends Component {
 
 	}
 
+	claim=()=>{
+		if (typeof window.ethereum !== "undefined") {
+			this.requestAccount();
+			const provider = new ethers.providers.Web3Provider(window.ethereum);
+			//console.log({ provider });
+			const signer = provider.getSigner();
+			//instatiate the contract
+			const contract = new ethers.Contract(Merkle.address, Merkle.abi, signer);
+			
+		}	
+	}
 
 
 	render() {
-    
 		return (
-			<div>
-				
+			<div>	
 				<h1>MERKLE DISTRIBUTOR</h1>
 				<br />
-
 				<div> 
 					<h5>Check if your address is valid for claiming tokens :</h5>
 					<br/><br/>
@@ -131,8 +139,7 @@ class App extends Component {
 						this.state.isClaim===1?
 						<span>You have already claimed</span>:
 						this.state.isClaim===2?<span>You haven't Claimed</span>:null
-					}
-					
+					}	
 				</div>
 				<br/><br/>
 				<div>
@@ -145,7 +152,7 @@ class App extends Component {
 					<button
 						className="btn btn-secondary btn-sm"
 						onClick={() => {
-							
+							this.claim();
 						}}
 					>
 						Claim
