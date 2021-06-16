@@ -89,7 +89,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>	
+			<div className="text-center">	
 				<h1>MERKLE DISTRIBUTOR</h1>
 				<br />
 				<div> 
@@ -146,7 +146,7 @@ class App extends Component {
 				</div>
 				<br/><br/>
 				<div>
-					<h5>CLAIM:</h5>
+					<h5>CLAIM</h5>
 					<input
 						type="text"
 						onChange={this.getProof}
