@@ -1,8 +1,8 @@
-const data1 = require('./root.json');
+//const data1 = require('./root.json');
 const data = require('./list.json');
 const { ethers } = require("ethers");
 
-const root=data1.Merkle_root;
+//const root=data1.Merkle_root;
 
 const leaves=[];
 
@@ -44,8 +44,9 @@ const wrap_get=(_index)=>{
 
 
 
-var node;
+//var node;
 //function to verify  the merkle proof
+/*
 const verify=(root,proof,index)=>{
 
 	index=index-1;
@@ -65,7 +66,7 @@ const verify=(root,proof,index)=>{
 		
 
 }
-
+*/
 //verify(root,wrap_get(1),1);
 
 module.exports={

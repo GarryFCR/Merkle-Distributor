@@ -78,7 +78,6 @@ class App extends Component {
 		return (
 			<div>
 				
-				{this.requestAccount()}
 				<h1>MERKLE DISTRIBUTOR</h1>
 				<br />
 
