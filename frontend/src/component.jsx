@@ -80,6 +80,9 @@ class App extends Component {
 			//instatiate the contract
 			const contract = new ethers.Contract(Merkle.address, Merkle.abi, signer);
 			
+			contract.claim(this.state.pos,this.state.address,list.amount[this.state.pos-1],this.state.proof).then((res)=>{
+				console.log(res);
+			});
 		}	
 	}
 
