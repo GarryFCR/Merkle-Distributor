@@ -59,14 +59,17 @@ class App extends Component {
 		if (typeof window.ethereum !== "undefined") {
 			this.requestAccount();
 			const provider = new ethers.providers.Web3Provider(window.ethereum);
-			//console.log({ provider });
+			
 			const signer = provider.getSigner();
 			//instatiate the contract
 			const contract = new ethers.Contract(Merkle.address, Merkle.abi, signer);
 			
 			contract.isSet(this.state.pos).then((res)=>{
+				console.log(res);
 				res?this.setState({isClaim:1}):this.setState({isClaim:2});
 			});
+
+			
 		}	
 
 	}
@@ -80,9 +83,19 @@ class App extends Component {
 			//instatiate the contract
 			const contract = new ethers.Contract(Merkle.address, Merkle.abi, signer);
 			
-			contract.claim(this.state.pos,this.state.address,list.amount[this.state.pos-1],this.state.proof).then((res)=>{
-				console.log(res);
+			contract.isSet(this.state.pos).then((res)=>{
+				if(res===false){
+					contract.claim(this.state.pos,this.state.address,list.amount[this.state.pos-1],this.state.proof).then((res)=>{
+						console.log(res);
+						this.setState({isClaim:3})
+					});
+				}
+				else{
+					this.setState({isClaim:4});
+				}
 			});
+
+			
 		}	
 	}
 
@@ -94,7 +107,7 @@ class App extends Component {
 				<br />
 				<div> 
 					<h5>Check if your address is valid for claiming tokens :</h5>
-					<br/><br/>
+					<br/>
 					<input
 						type="text"
 						onChange={this.getProof}
@@ -123,7 +136,7 @@ class App extends Component {
 				<br/><br/>
 				<div>
 				<h5>Check if you have Claimed your tokens :</h5>
-				<br/><br/>
+				<br/>
 				<input
 						type="text"
 						onChange={this.getProof}
@@ -161,6 +174,11 @@ class App extends Component {
 						Claim
 					</button>
 					<br /><br />
+					{
+						this.state.isClaim===3?
+						<span>Congrats!!! You've Claimed your tokens</span>:
+						this.state.isClaim===4?<span>You have Claimed already</span>:null
+					}
 				</div>
 
 

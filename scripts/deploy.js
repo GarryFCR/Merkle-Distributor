@@ -14,6 +14,8 @@ async function main(){
   	const Dist = await ethers.getContractFactory("Merkle_Distributor");
   	const dist = await Dist.deploy(token.address,root);
 
+    await token.transfer(dist.address,100000);
+    await token.balanceOf(dist.address).then(res=>{console.log(res.toNumber())});
   	console.log("Merkle Distributor contract :",dist.address);
 
 
