@@ -102,10 +102,12 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="text-center">	
+			<div className="text-center">
+				<br />	
 				<h1>MERKLE DISTRIBUTOR</h1>
+				<br /><br />
 				<br />
-				<div> 
+				<div > 
 					<h5>Check if your address is valid for claiming tokens :</h5>
 					<br/>
 					<input
@@ -113,7 +115,7 @@ class App extends Component {
 						onChange={this.getProof}
 						placeholder="Enter Address"
 					></input>
-					<button
+					<button 
 						className="btn btn-secondary btn-sm"
 						onClick={() => {
 							this.get_address();
