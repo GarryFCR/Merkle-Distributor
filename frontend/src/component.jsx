@@ -42,6 +42,7 @@ class App extends Component {
 		} else {
 			this.setState({address: ""});
 			this.setState({proof: []});
+			this.setState({pos: 0});
 			console.log(false);
 		}
 	};
@@ -56,7 +57,7 @@ class App extends Component {
 	};
 
 	check_claim=()=>{
-		if (typeof window.ethereum !== "undefined") {
+		if (typeof window.ethereum !== "undefined" & this.state.pos !==0) {
 			this.requestAccount();
 			const provider = new ethers.providers.Web3Provider(window.ethereum);
 			
@@ -65,17 +66,18 @@ class App extends Component {
 			const contract = new ethers.Contract(Merkle.address, Merkle.abi, signer);
 			
 			contract.isSet(this.state.pos).then((res)=>{
-				console.log(res);
+				//console.log(res);
 				res?this.setState({isClaim:1}):this.setState({isClaim:2});
-			});
-
-			
+			});	
 		}	
+		else{
+			this.setState({isClaim:5})
+		}
 
 	}
 
 	claim=()=>{
-		if (typeof window.ethereum !== "undefined") {
+		if (typeof window.ethereum !== "undefined" & this.state.pos !==0) {
 			this.requestAccount();
 			const provider = new ethers.providers.Web3Provider(window.ethereum);
 			//console.log({ provider });
@@ -86,17 +88,18 @@ class App extends Component {
 			contract.isSet(this.state.pos).then((res)=>{
 				if(res===false){
 					contract.claim(this.state.pos,this.state.address,list.amount[this.state.pos-1],this.state.proof).then((res)=>{
-						console.log(res);
+						//console.log(res);
 						this.setState({isClaim:3})
 					});
 				}
 				else{
 					this.setState({isClaim:4});
 				}
-			});
-
-			
+			});			
+		}else{
+			this.setState({isClaim:6})
 		}	
+		
 	}
 
 
@@ -156,7 +159,8 @@ class App extends Component {
 					{
 						this.state.isClaim===1?
 						<span>You have already claimed</span>:
-						this.state.isClaim===2?<span>You haven't Claimed</span>:null
+						this.state.isClaim===2?<span>You haven't Claimed</span>:
+						this.state.isClaim===5?<span>Invalid address</span>:null
 					}	
 				</div>
 				<br/><br/>
@@ -179,7 +183,8 @@ class App extends Component {
 					{
 						this.state.isClaim===3?
 						<span>Congrats!!! You've Claimed your tokens</span>:
-						this.state.isClaim===4?<span>You have Claimed already</span>:null
+						this.state.isClaim===4?<span>You have Claimed already</span>:
+						this.state.isClaim===6?<span>Invalid address</span>:null
 					}
 				</div>
 
